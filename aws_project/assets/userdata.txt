@@ -1,0 +1,5 @@
+#!/bin/bash
+sudo su
+yum update -y
+yum update httpd php -y
+sudo service httpd start

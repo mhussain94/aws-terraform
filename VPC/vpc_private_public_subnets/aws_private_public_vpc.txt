@@ -1,0 +1,44 @@
+
+-------------
+How to create a VPC? this guide will explain how to create a VPC in AWS! [network isolation]
+
+1- Two VPCs can compute with each using VPC Peering/ Transit gateway
+
+This example will be deploying 2 public 2 private subnets
+2 Subnets, 1 public 1 private in one AZ model
+
+VPC CIDR : 10.0.0.0/16
+
+Public Subnets: 10.0.1.0/24 10.0.2.0/24
+Private Subnets: 10.0.3.0/24 10.0.4.0/24
+
+STEP:1 Create VPC with the CIDR block
+** WHEN VPC created using AWS console, these created by default
+1- Route table created
+2- Network ACL created (subnet level firewall routing)
+3- Security group created (instance level firewall routing)
+
+Need to create:
+1- Subnets 
+2- Internet gateway
+3- Custom route table 
+
+
+STEP:2 Create Subnets with the CIDR blocks decided earlier
+1- Modify auto assign public ip for these subnets
+
+
+STEP:3 Attach Internet gateway to public subnets to make route traffic from subnets to internet
+1- Create IGW
+2- Attach to the VPC created earlier
+
+STEP:3 By default route table routes requests locally (within the VPC)
+1- Createa  new "public route table"
+2- edit it's routes, to 0.0.0.0/0 and add target to internet with the IGW created earlier
+3- By default all subnets are associated with the default (no internet one) route table
+4- now associate the public subents to the public route table created in this step
+
+
+** Basically, now if you launch an EC2 in the private subnets, it can only be connected through a server in public subnet
+
+
